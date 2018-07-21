@@ -1,0 +1,12 @@
+tag a4cfdfc42c5ce2aa946c3a4214681e0b82317c6d 1.2.7
+Author:	Hendrik Leppkes <h.leppkes@gmail.com>
+Date:	Tue Mar 28 17:31:45 2017 +0200
+
+Tag as 1.2.7
+
+commit e150cb4055d3f5d00c11c60b9b6bc5cde7b88325
+Author: Hendrik Leppkes <h.leppkes@gmail.com>
+Date:   Tue Mar 28 17:31:32 2017 +0200
+
+    Update TOC for 7.2
+

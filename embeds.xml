@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+  <Script file="libs\util\util.lua"/> 
+  <Script file="libs\LibButtonGlow-1.0\LibStub\LibStub.lua"/> 
+  <Script file="libs\LibButtonGlow-1.0\LibButtonGlow-1.0.lua"/> 
+  <Script file="libs\!NoTaint_UIDropDownMenu\LibStub\LibStub.lua"/> 
+  <Include file="libs\!NoTaint_UIDropDownMenu\UIDropDownMenu.xml"/> 
+</Ui>
