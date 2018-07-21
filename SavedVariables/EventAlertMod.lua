@@ -47,7 +47,7 @@ EA_Config = {
 	["AlertSoundValue"] = 1,	
 	["StackFontSize"] = 13.5,
 	["ShowName"] = true,
-	["Version"] = "7.0.3.20160822",
+	["Version"] = "8.0.0 20180722",
 	["IsKeepSCD"] = true,
 	["HUNTER_ShowPetFocus"] = true,
 	["OPTION_ICON"] = true,
@@ -2316,7 +2316,7 @@ EA_GrpItems = {
 									["SubCheckAndOp"] = true,
 									["PowerLessThanValue"] = 10,
 									["PowerTypeNum"] = 11,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["PowerCompType"] = 5,
 								}, -- [1]
 							},
@@ -2389,7 +2389,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["CheckCD"] = 34433,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["UnitType"] = "player",
@@ -2472,7 +2472,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["CheckCD"] = 8092,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["PowerTypeNum"] = 0,
@@ -2567,7 +2567,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["CheckCD"] = 589,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["PowerTypeNum"] = 0,
@@ -2601,7 +2601,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["CheckCD"] = 2944,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["PowerTypeNum"] = 0,
@@ -2642,7 +2642,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["CheckCD"] = 53,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "ENERGY",
 									["PowerTypeNum"] = 3,
@@ -2703,7 +2703,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["SubCheckAndOp"] = true,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "ENERGY",
 									["UnitType"] = "player",
@@ -2750,7 +2750,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["SubCheckAndOp"] = true,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["UnitType"] = "player",
@@ -2790,7 +2790,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["CheckCD"] = 29166,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["PowerTypeNum"] = 0,
@@ -2829,7 +2829,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["SubCheckAndOp"] = true,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "MANA",
 									["UnitType"] = "player",
@@ -2878,7 +2878,7 @@ EA_GrpItems = {
 							["SubChecks"] = {
 								{
 									["SubCheckAndOp"] = true,
-									["EventType"] = "UNIT_POWER",
+									["EventType"] = "UNIT_POWER_UPDATE",
 									["SubCheckResult"] = false,
 									["PowerType"] = "LUNAR_POWER",
 									["UnitType"] = "player",

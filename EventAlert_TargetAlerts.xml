@@ -171,7 +171,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<CheckButton name="$parent_Target_MyDebuff" inherits="OptionsCheckButtonTemplate">
+			<CheckButton name="$parent_Target_MyDebuff" inherits="InterfaceOptionsCheckButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parent_SelAll" relativePoint="BOTTONLEFT">
 						<Offset>

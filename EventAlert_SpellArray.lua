@@ -325,7 +325,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 3,
 										PowerType = "ENERGY",
@@ -357,7 +357,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -389,7 +389,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -421,7 +421,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -454,7 +454,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 玩家怒氣滿15以上，並且割碎不在CD中
 										SubCheckAndOp = true,		-- 可無視
-										EventType = "UNIT_POWER",	-- 事件別，屬於"能量異動類"
+										EventType = "UNIT_POWER_UPDATE",	-- 事件別，屬於"能量異動類"
 										UnitType = "player",		-- 檢測對象，為"玩家"
 										PowerTypeNum = 1, 		-- 能量類型編號(1:怒氣)
 										PowerType = "RAGE",		-- 能量類型, 可無視
@@ -474,7 +474,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 玩家怒氣滿15以上，並且割裂不在CD中
 										SubCheckAndOp = true,		-- 可無視
-										EventType = "UNIT_POWER",       -- 事件別，屬於"能量異動類"
+										EventType = "UNIT_POWER_UPDATE",       -- 事件別，屬於"能量異動類"
 										UnitType = "player",            -- 檢測對象，為"玩家"
 										PowerTypeNum = 1,               -- 能量類型編號(1:怒氣)
 										PowerType = "RAGE",             -- 能量類型, 可無視
@@ -524,7 +524,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 玩家怒氣滿15以上，並且粉碎不在CD中
 										SubCheckAndOp = true,		-- 可無視
-										EventType = "UNIT_POWER",       -- 事件別，屬於"能量異動類"
+										EventType = "UNIT_POWER_UPDATE",       -- 事件別，屬於"能量異動類"
 										UnitType = "player",            -- 檢測對象，為"玩家"
 										PowerTypeNum = 1,               -- 能量類型編號(1:怒氣)
 										PowerType = "RAGE",             -- 能量類型, 可無視
@@ -570,7 +570,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 玩家怒氣滿25以上，並且痛擊不在CD中
 										SubCheckAndOp = true,		-- 可無視
-										EventType = "UNIT_POWER",       -- 事件別，屬於"能量異動類"
+										EventType = "UNIT_POWER_UPDATE",       -- 事件別，屬於"能量異動類"
 										UnitType = "player",            -- 檢測對象，為"玩家"
 										PowerTypeNum = 1,               -- 能量類型編號(1:怒氣)
 										PowerType = "RAGE",             -- 能量類型, 可無視
@@ -590,7 +590,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 玩家怒氣滿25以上，並且揮擊不在CD中
 										SubCheckAndOp = true,		-- 可無視
-										EventType = "UNIT_POWER",       -- 事件別，屬於"能量異動類"
+										EventType = "UNIT_POWER_UPDATE",       -- 事件別，屬於"能量異動類"
 										UnitType = "player",            -- 檢測對象，為"玩家"
 										PowerTypeNum = 1,               -- 能量類型編號(1:怒氣)
 										PowerType = "RAGE",             -- 能量類型, 可無視
@@ -729,7 +729,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -820,7 +820,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 9,
 										PowerType = "HOLY_POWER",
@@ -847,7 +847,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 9,
 										PowerType = "HOLY_POWER",
@@ -922,7 +922,7 @@ function EventAlert_LoadSpellArray()
 										["PowerLessThanValue"] = 3,
 										["CheckCD"] = 85256,
 										["PowerTypeNum"] = 9,
-										["EventType"] = "UNIT_POWER",
+										["EventType"] = "UNIT_POWER_UPDATE",
 										["PowerCompType"] = 4,
 									}, -- [1]
 									[2] = {
@@ -945,7 +945,7 @@ function EventAlert_LoadSpellArray()
 								["SubChecks"] = {
 									[1] = {
 										["SubCheckAndOp"] = true,
-										["EventType"] = "UNIT_POWER",
+										["EventType"] = "UNIT_POWER_UPDATE",
 										["SubCheckResult"] = false,
 										["PowerType"] = "MANA",
 										["UnitType"] = "player",
@@ -966,7 +966,7 @@ function EventAlert_LoadSpellArray()
 								["SubChecks"] = {
 									[1] = {
 										["SubCheckAndOp"] = true,
-										["EventType"] = "UNIT_POWER",
+										["EventType"] = "UNIT_POWER_UPDATE",
 										["SubCheckResult"] = false,
 										["PowerType"] = "HOLY_POWER",
 										["UnitType"] = "player",
@@ -977,7 +977,7 @@ function EventAlert_LoadSpellArray()
 									}, -- [1]
 									[2] = {
 										["SubCheckAndOp"] = false,
-										["EventType"] = "UNIT_POWER",
+										["EventType"] = "UNIT_POWER_UPDATE",
 										["SubCheckResult"] = false,
 										["PowerType"] = "MANA",
 										["UnitType"] = "player",
@@ -1075,7 +1075,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -1137,7 +1137,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 心爆未CD，且MP夠
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -1190,7 +1190,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {	-- 吸血之觸未CD，且MP夠
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -1231,7 +1231,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -1258,7 +1258,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 0,
 										PowerType = "MANA",
@@ -1331,7 +1331,7 @@ function EventAlert_LoadSpellArray()
 								SubChecks = {
 									[1] = {
 										SubCheckAndOp = true,
-										EventType = "UNIT_POWER",
+										EventType = "UNIT_POWER_UPDATE",
 										UnitType = "player",
 										PowerTypeNum = 3,
 										PowerType = "ENERGY",
@@ -1439,7 +1439,7 @@ function EventAlert_LoadSpellArray()
 								["SubChecks"] = {
 									[1] = {
 										["SubCheckAndOp"] = true,
-										["EventType"] = "UNIT_POWER",
+										["EventType"] = "UNIT_POWER_UPDATE",
 										["UnitType"] = "player",
 										["PowerTypeNum"] = 0,
 										["PowerType"] = "MANA",

@@ -476,7 +476,7 @@ function EAFun_GroupEvent_SaveFrameToGroupEvent()
 					fGetValue, sReturnValue = EAFun_GroupEvent_GetValueFromFrameItem(sSubCheckFramePrefix.."_SubCheckCDTextBox");
 					if (fGetValue) then aTempSubCheckItem.CheckCD = sReturnValue else aTempSubCheckItem.CheckCD = nil end;
 
-					if (aTempSubCheckItem.EventType == "UNIT_POWER") then
+					if (aTempSubCheckItem.EventType == "UNIT_POWER_UPDATE") then
 						-- PowerType
 						fGetValue, sReturnValue = EAFun_GroupEvent_GetValueFromFrameItem(sSubCheckFramePrefix.."_SubCheckPowerTypeDowndown", true);
 						
@@ -865,8 +865,7 @@ end
 function EAFun_GroupEvent_SpellTextOnEnterPressed(self)
 	local iSpellID = tonumber(self:GetText());
 	if (iSpellID ~= nil) then
-		local sName, sRank, sIcon = GetSpellInfo(iSpellID);
-		if (sRank ~= nil and sRank ~= "") then sName = sName.."("..sRank..")" end;
+		local sName,_, sIcon = GetSpellInfo(iSpellID);
 		if self.SpellName ~= nil then self.SpellName:SetText(sName) end;
 		if self.SpellIcon ~= nil then 
 			--self.SpellIcon:SetBackdrop({bgFile = sIcon}) 
@@ -1284,7 +1283,7 @@ function EAFun_GroupEvent_AddNewSubCheckBtn_Click(self)
 	if (SubCheckEventTypeDowndown == nil) then
 		SubCheckEventTypeDowndown = CreateFrame("CheckButton", sSubCheckFramePrefix.."_SubCheckEventTypeDowndown", SubCheckFrame, "Lib_UIDropDownMenuTemplate");
 	end	-- Get GroupItem Value
-		sDefaultValue = "UNIT_POWER";
+		sDefaultValue = "UNIT_POWER_UPDATE";
 		fGetValue, sReturnValue = EAFun_GroupEvent_GetValueFromGroupItem("EventType", iSpellIndex, iCheckIndex, iSubCheckIndex);
 		if (fGetValue) then
 			sDefaultValue = sReturnValue;
@@ -1354,7 +1353,7 @@ function EAFun_GroupEvent_ChangeEventType_Click(EventType, ExtraInfo)
 	local SubCheckFrame = _G[sSubCheckFramePrefix];
 	local SubEventFrame, iShowEventIndex = nil, 1;
 
-	if (EventType == "UNIT_POWER") then
+	if (EventType == "UNIT_POWER_UPDATE") then
 		iShowEventIndex = 1;
 	elseif (EventType == "UNIT_HEALTH") then
 		iShowEventIndex = 2;
@@ -1570,7 +1569,7 @@ function EAFun_GroupEvent_ChangeEventType_Click(EventType, ExtraInfo)
 				--// G_Group_CfgFramePrefix..iSpellIndex.."_"..iCheckIndex.."_"..iSubCheckIndex.."_SubCheckCastByPlayerCheckBox"
 				local SubCheckCastByPlayerCheckBox = _G[sSubCheckFramePrefix.."_SubCheckCastByPlayerCheckBox"];
 				if (SubCheckCastByPlayerCheckBox == nil) then
-					SubCheckCastByPlayerCheckBox = CreateFrame("CheckButton", sSubCheckFramePrefix.."_SubCheckCastByPlayerCheckBox", SubEventFrame, "OptionsCheckButtonTemplate");
+					SubCheckCastByPlayerCheckBox = CreateFrame("CheckButton", sSubCheckFramePrefix.."_SubCheckCastByPlayerCheckBox", SubEventFrame, "InterfaceOptionsCheckButtonTemplate");
 				end	-- Get GroupItem Value
 					sDefaultValue = false;
 					fGetValue, sReturnValue = EAFun_GroupEvent_GetValueFromGroupItem("CastByPlayer", iSpellIndex, iCheckIndex, iSubCheckIndex);

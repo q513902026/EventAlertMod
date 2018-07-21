@@ -168,7 +168,7 @@ EA_XGRPALERT_LOGICS = {
 	[2]={text="Or", value=0}, };
 EA_XGRPALERT_EVENTTYPE = "EventType:";
 EA_XGRPALERT_EVENTTYPES = {
-	[1]={text="Unit Power Changes", value="UNIT_POWER"},
+	[1]={text="Unit Power Changes", value="UNIT_POWER_UPDATE"},
 	[2]={text="Unit Health Changes", value="UNIT_HEALTH"},
 	[3]={text="Unit Aura Changes", value="UNIT_AURA"},
 	[4]={text="Combo Point Changes", value="UNIT_COMBO_POINTS"}, };

@@ -220,12 +220,10 @@ function CreateFrames_CreateSpellFrame(index, typeIndex)
 	eaf.spellStack:SetPoint("BOTTOMRIGHT", 0, 15);
 	
 	local spellId = tonumber(index)	
-	local name, rank, icon = GetSpellInfo(spellId);
-	if rank == nil then rank = "nil" end;
+	local name, _, icon = GetSpellInfo(spellId);
 	if typeIndex == 1 then
-		if EA_SPELLINFO_SELF[spellId] == nil then EA_SPELLINFO_SELF[spellId] = {name, rank, icon, count, duration, expirationTime, unitCaster, isDebuff} end;
+		if EA_SPELLINFO_SELF[spellId] == nil then EA_SPELLINFO_SELF[spellId] = {name,  icon, count, duration, expirationTime, unitCaster, isDebuff} end;
 		EA_SPELLINFO_SELF[spellId].name = name;
-		EA_SPELLINFO_SELF[spellId].rank = rank;
 		if (spellId == 48517) then          -- Druid / Eclipse (Solar): replace the Icon as Wrath (Rank 1)
 			_, _, icon, _, _, _, _, _, _ = GetSpellInfo(5176);
 		elseif (spellId == 48518) then      -- Druid / Eclipse (Lunar): replace the Icon as Starfire (Rank 1)
@@ -235,15 +233,13 @@ function CreateFrames_CreateSpellFrame(index, typeIndex)
 		end
 		EA_SPELLINFO_SELF[spellId].icon = icon;
 	elseif typeIndex == 2 then
-		if EA_SPELLINFO_TARGET[spellId] == nil then EA_SPELLINFO_TARGET[spellId] = {name, rank, icon, count, duration, expirationTime, unitCaster, isDebuff} end;
+		if EA_SPELLINFO_TARGET[spellId] == nil then EA_SPELLINFO_TARGET[spellId] = {name,  icon, count, duration, expirationTime, unitCaster, isDebuff} end;
 		EA_SPELLINFO_TARGET[spellId].name = name;
-		EA_SPELLINFO_TARGET[spellId].rank = rank;
 		EA_SPELLINFO_TARGET[spellId].icon = icon;
 	elseif typeIndex == 3 then
-		if EA_SPELLINFO_SCD[spellId] == nil then EA_SPELLINFO_SCD[spellId] = {name, rank, icon} end;
+		if EA_SPELLINFO_SCD[spellId] == nil then EA_SPELLINFO_SCD[spellId] = {name,  icon} end;
 		
 		EA_SPELLINFO_SCD[spellId].name = name;
-		EA_SPELLINFO_SCD[spellId].rank = rank;
 		EA_SPELLINFO_SCD[spellId].icon = icon;
 		
 		for k,v in pairs(EA_ScdItems[EA_playerClass][spellId]) do
@@ -474,7 +470,7 @@ local function ChkboxGameToolTip(self)
 end
 
 
-function CreateFrames_CreateSpellListChkbox(SpellID, FrameNamePrefix, ParentFrameObj, LocOffsetX, LocOffsetY, SpellName, SpellRank, FrameIndex, EditboxObj)
+function CreateFrames_CreateSpellListChkbox(SpellID, FrameNamePrefix, ParentFrameObj, LocOffsetX, LocOffsetY, SpellName,  FrameIndex, EditboxObj)
 	
 	SpellID = tonumber(SpellID);	
 	local iTooltipSpellID = SpellID;
@@ -497,16 +493,13 @@ function CreateFrames_CreateSpellListChkbox(SpellID, FrameNamePrefix, ParentFram
 
 	local SpellChkbox = _G[FrameNamePrefix..SpellID];
 	if (SpellChkbox == nil) then
-		SpellChkbox = CreateFrame("CheckButton", FrameNamePrefix..SpellID, ParentFrameObj, "OptionsCheckButtonTemplate");
+		SpellChkbox = CreateFrame("CheckButton", FrameNamePrefix..SpellID, ParentFrameObj, "InterfaceOptionsCheckButtonTemplate");
 	end
 	SpellChkbox:SetPoint("TOPLEFT", LocOffsetX + 25, LocOffsetY);
 	SpellChkbox:SetChecked(fValue);
 
-	if (SpellRank == "") then
-		_G[SpellChkbox:GetName().."Text"]:SetText(SpellName.." ["..SpellID.."]");
-	else
-		_G[SpellChkbox:GetName().."Text"]:SetText(SpellName.."("..SpellRank..") ["..SpellID.."]");
-	end
+	_G[SpellChkbox:GetName().."Text"]:SetText(SpellName.." ["..SpellID.."]");
+
 
 	SpellChkbox.SpellID = SpellID;
 	SpellChkbox.TooltipSpellID = iTooltipSpellID;
@@ -630,22 +623,20 @@ function CreateFrames_CfgBtn_SaveSpellCondition(self)
 end
 
 local function EACFFun_EventsFrame_CheckSpellID(spellID, ReCheckSpell)
-	local EA_name, EA_rank, EA_icon = GetSpellInfo(spellID);
+	local EA_name,_,  EA_icon = GetSpellInfo(spellID);
 	if EA_name == nil then EA_name = "" end;
-	if EA_rank == nil then EA_rank = "" end;
 
 	if (ReCheckSpell) then
 		if (spellID == 33151) then
-			EA_rank = "";
 		elseif (spellID == 48517) then      -- Druid / Eclipse (Solar): replace the Icon as Wrath (Rank 1)
 			_, _, EA_icon = GetSpellInfo(5176);
 		elseif (spellID == 48518) then      -- Druid / Eclipse (Lunar): replace the Icon as Starfire (Rank 1)
-			_, _, EA_icon = GetSpellInfo(2912);
+			_, _,EA_icon = GetSpellInfo(2912);
 		elseif (spellID == 8921) then       -- Druid / Moonfire: always use the starfall picture
 			EA_icon = "Interface/Icons/Spell_Nature_Starfall";
 		end
 	end
-	return EA_name, EA_rank, EA_icon;
+	return EA_name, EA_icon;
 end
 -- function CreateFrames_CfgBtn_LoadSpellCondition(FrameIndex, SpellID)
 function CreateFrames_CfgBtn_LoadSpellCondition(self)
@@ -654,8 +645,7 @@ function CreateFrames_CfgBtn_LoadSpellCondition(self)
 	local SpellID = self.SpellID;
 	local ReCheckSpell = false;
 	if (FrameIndex == 1) then ReCheckSpell = true end;
-	local SpellName, SpellRank, SpellIconPath = EACFFun_EventsFrame_CheckSpellID(SpellID, ReCheckSpell);
-	if (SpellRank ~= nil and SpellRank ~= "") then SpellName = SpellName.."("..SpellRank..")" end;
+	local SpellName, SpellIconPath = EACFFun_EventsFrame_CheckSpellID(SpellID, ReCheckSpell);
 	
 	--EA_SpellCondition_Frame_SpellIcon:SetBackdrop({bgFile = SpellIconPath});
 	
@@ -1022,9 +1012,9 @@ local function EACFFun_EventsFrame_RefreshSpellList(FrameIndex, EAItems, FrameNa
 	end
 	for index, value in pairsByKeys(EAItems) do
 		-- local EA_name, EA_rank, EA_icon = GetSpellInfo(index);
-		local EA_name, EA_rank, EA_icon = EACFFun_EventsFrame_CheckSpellID(index, ReCheckSpell);
+		local EA_name, EA_icon = EACFFun_EventsFrame_CheckSpellID(index, ReCheckSpell);
 		CreateFrames_CreateSpellListIcon(index, FrameNamePrefix.."_Icon_", ParentFrameObj, LocOffsetX, LocOffsetY, EA_icon);
-		CreateFrames_CreateSpellListChkbox(index, FrameNamePrefix.."_ChkBtn_", ParentFrameObj, LocOffsetX, LocOffsetY, EA_name, EA_rank, FrameIndex, EditboxObj);
+		CreateFrames_CreateSpellListChkbox(index, FrameNamePrefix.."_ChkBtn_", ParentFrameObj, LocOffsetX, LocOffsetY, EA_name,  FrameIndex, EditboxObj);
 		if (CanCfg) then CreateFrames_CreateSpellListCfgBtn(index, FrameNamePrefix.."_CfgBtn_", ParentFrameObj, LocOffsetX, LocOffsetY, FrameIndex) end;
 		LocOffsetY = LocOffsetY - 25;
 	end
@@ -1044,22 +1034,10 @@ function CreateFrames_EventsFrame_RefreshSpellList(FrameIndex)
 		local LocOffsetY = 0;
 		local EA_name, EA_rank, EA_icon = "", "", "";
 		for iGrpIndex, aGrpChecks in ipairs (EA_GrpItems[EA_playerClass]) do
-			EA_name, _, EA_icon = EACFFun_EventsFrame_CheckSpellID(aGrpChecks.Spells[1].SpellIconID, false);
-			EA_rank = EA_XGRPALERT_TALENTS;
-			if (aGrpChecks.ActiveTalentGroup ~= nil) then
-				
-				if (aGrpChecks.ActiveTalentGroup == 1) then 
-					EA_rank = EA_XGRPALERT_TALENT1
-				elseif (aGrpChecks.ActiveTalentGroup == 2) then
-					EA_rank = EA_XGRPALERT_TALENT2
-				elseif (aGrpChecks.ActiveTalentGroup == 3) then
-					EA_rank = EA_XGRPALERT_TALENT3
-				elseif (aGrpChecks.ActiveTalentGroup == 4) then
-					EA_rank = EA_XGRPALERT_TALENT4
-				end								
-			end
+			EA_name, EA_icon = EACFFun_EventsFrame_CheckSpellID(aGrpChecks.Spells[1].SpellIconID, false);
+
 			CreateFrames_CreateSpellListIcon(iGrpIndex, "EA_GroupFrame_Icon_", EA_Group_Events_Frame_SpellScrollFrameList, 0, LocOffsetY, EA_icon);
-			CreateFrames_CreateSpellListChkbox(iGrpIndex, "EA_GroupFrame_ChkBtn_", EA_Group_Events_Frame_SpellScrollFrameList, 0, LocOffsetY, EA_name, EA_rank, FrameIndex, EA_Group_Events_Frame_SpellEditBox);
+			CreateFrames_CreateSpellListChkbox(iGrpIndex, "EA_GroupFrame_ChkBtn_", EA_Group_Events_Frame_SpellScrollFrameList, 0, LocOffsetY, EA_name, FrameIndex, EA_Group_Events_Frame_SpellEditBox);
 			CreateFrames_CreateSpellListCfgBtn(iGrpIndex, "EA_GroupFrame_CfgBtn_", EA_Group_Events_Frame_SpellScrollFrameList, 0, LocOffsetY, FrameIndex);
 			CreateFrames_CreateSpellListCfgBtn2(iGrpIndex, "EA_GroupFrame_CfgBtn2_", EA_Group_Events_Frame_SpellScrollFrameList, -25, LocOffsetY, FrameIndex);
 			LocOffsetY = LocOffsetY - 25;
@@ -1102,7 +1080,7 @@ function CreateFrames_CreateGroupCheckFrame(iGroupIndex)
         local aGroupFrameIndexs = {};
         local sEventType, iEventSeq, sname, iconpath = "", 0, "", "";
 	for iInd_i, aValue_i in ipairs(aGroupChecks.Spells) do
-		sname, _, iconpath = GetSpellInfo(aValue_i.SpellIconID);
+		sname,_, iconpath = GetSpellInfo(aValue_i.SpellIconID);
 		eaf.GC.Spells[iInd_i].SpellName = sname;
 		eaf.GC.Spells[iInd_i].SpellIconPath = iconpath;
 		eaf.GC.Spells[iInd_i].SpellResult = false;
@@ -1121,7 +1099,7 @@ function CreateFrames_CreateGroupCheckFrame(iGroupIndex)
 				aGroupFrameIndexs[sEventType][iGroupIndex][iEventSeq].Spells = iInd_i;
 				aGroupFrameIndexs[sEventType][iGroupIndex][iEventSeq].Checks = iInd_j;
 				aGroupFrameIndexs[sEventType][iGroupIndex][iEventSeq].SubChecks = iInd_k;
-				if (sEventType == "UNIT_POWER") then
+				if (sEventType == "UNIT_POWER_UPDATE") then
 					eaf.GC.Spells[iInd_i].Checks[iInd_j].SubChecks[iInd_k].PowerType = GC_PowerType[aValue_k.PowerTypeNum];
 				end
 				eaf.GC.Spells[iInd_i].Checks[iInd_j].SubChecks[iInd_k].SubCheckResult = false;

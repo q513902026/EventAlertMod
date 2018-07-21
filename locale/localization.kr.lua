@@ -170,7 +170,7 @@ EA_XGRPALERT_LOGICS = {
 	[2]={text="또는", value=0}, };
 EA_XGRPALERT_EVENTTYPE = "이벤트 형태:";
 EA_XGRPALERT_EVENTTYPES = {
-	[1]={text="유닛 파워 변경", value="UNIT_POWER"},
+	[1]={text="유닛 파워 변경", value="UNIT_POWER_UPDATE"},
 	[2]={text="유닛 생명력 변경", value="UNIT_HEALTH"},
 	[3]={text="유닛 오라 변경", value="UNIT_AURA"},
 	[4]={text="연계 포인트 변경", value="UNIT_COMBO_POINTS"}, };

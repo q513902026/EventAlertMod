@@ -109,7 +109,7 @@ end
 function EventAlert_OnEvent(self, event, ...)
 		
 		local func = EA_EventList[event]
-		if type(func) == "function" then func(self,event,...) end
+		if type(func) == "function" then if event:match("COMBAT_LOG_EVENT") then func(self,event,CombatLogGetCurrentEventInfo()) else func(self,event,...) end end
 end
 --If 'OnLoad' event had loaded, then excute this 'ADDON_LOADED' event.
 function EventAlert_ADDON_LOADED(self, event, ...)
@@ -199,17 +199,17 @@ function EventAlert_InitArrayConfig()
 	
 	init1_2()
 	
-	
+	--[[
 	if EA_Config.EA_SPELL_ITEM == nil then
 		EA_Config.EA_SPELL_ITEM = {}
 		for i = 1,999999 do
-			s = select(3,GetItemSpell(i))
+			s = select(2,GetItemSpell(i))
 			if s then
 				EA_Config.EA_SPELL_ITEM[s] = i
 			end
 		end
 	end
-	
+	]]--
 	
 	if (EA_Config.ChangeTimer == true) then								--若計時顯示在框架內
 		-- 若使用了小數點倒數
@@ -312,7 +312,7 @@ function EventAlert_PLAYER_ENTERING_WORLD(self, event, ...)
 
 		EA_ClassAltSpellName = { };
 		for i,v in pairs(EA_AltItems[EA_playerClass]) do
-			local name, rank = GetSpellInfo(i);
+			local name= GetSpellInfo(i);
 			EA_ClassAltSpellName[name] = tonumber(i);
 		end
 end
@@ -333,7 +333,7 @@ function EventAlert_UNIT_SPELLCAST_CAST(self,event,...)
 end
 function EventAlert_UNIT_SPELLCAST_SUCCEEDED(self,event,...)
 	
-	local unitCaster,spellName,_,_,spellID = ...
+	local unitCaster,spellName,spellID = ...
 	local surName = UnitName(unitCaster)	
 	EventAlert_ScdBuffs_Update(surName, spellName, spellID)
 end
@@ -493,7 +493,7 @@ function EventAlert_RUNE_POWER_UPDATE(self,event,...)
 	EventAlert_UpdateRunes();
 end
 -----------------------------------------------------------------
-function EventAlert_UNIT_POWER(self,event,...)
+function EventAlert_UNIT_POWER_UPDATE(self,event,...)
 	local arg1, arg2 = ...;
 	
 	--print(event,arg1,arg2)
@@ -563,7 +563,7 @@ function EventAlert_Buffs_Update(...)
 	
 	for i=1,40 do
 		
-		local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("player", i, "HELPFUL")
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("player", i, "HELPFUL")
 		
 		if (not spellID) then break end
 		if isCastByPlayer then unitCaster = "player" end
@@ -627,7 +627,7 @@ function EventAlert_Buffs_Update(...)
 	end
 	for i=1,40 do
 		
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("pet", i, "HELPFUL")
+		name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("pet", i, "HELPFUL")
 		
 		if (not spellID) then break end
 		if isCastByPlayer then unitCaster = "player" end
@@ -690,7 +690,7 @@ function EventAlert_Buffs_Update(...)
 	end
 
 	for i=41,80 do
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("player", i-40, "HARMFUL")
+		name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("player", i-40, "HARMFUL")
 		
 		if (not spellID) then break end
 		if isCastByPlayer then unitCaster = "player" end
@@ -734,7 +734,6 @@ function EventAlert_Buffs_Update(...)
 		if (ifAdd_buffCur) then
 			-- if EA_SPELLINFO_SELF[spellID] == nil then EA_SPELLINFO_SELF[spellID] = {name, rank, icon, count, duration, expirationTime, unitCaster, isDebuff} end;
 			EA_SPELLINFO_SELF[spellID].name = name;
-			EA_SPELLINFO_SELF[spellID].rank = rank;
 			EA_SPELLINFO_SELF[spellID].icon = icon;
 			EA_SPELLINFO_SELF[spellID].count = count;
 			EA_SPELLINFO_SELF[spellID].duration = duration;
@@ -752,7 +751,7 @@ function EventAlert_Buffs_Update(...)
 
 	
 	for i=41,80 do
-		local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("pet", i-40, "HARMFUL")
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("pet", i-40, "HARMFUL")
 		
 		if (not spellID) then break end
 		if isCastByPlayer then unitCaster = "player" end
@@ -796,7 +795,6 @@ function EventAlert_Buffs_Update(...)
 		if (ifAdd_buffCur) then
 			-- if EA_SPELLINFO_SELF[spellID] == nil then EA_SPELLINFO_SELF[spellID] = {name, rank, icon, count, duration, expirationTime, unitCaster, isDebuff} end;
 			EA_SPELLINFO_SELF[spellID].name = name;
-			EA_SPELLINFO_SELF[spellID].rank = rank;
 			EA_SPELLINFO_SELF[spellID].icon = icon;
 			EA_SPELLINFO_SELF[spellID].count = count;
 			EA_SPELLINFO_SELF[spellID].duration = duration;
@@ -963,7 +961,7 @@ function EventAlert_TarBuffs_Update(...)
 
 	for i=1,40 do
 		--name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID , canApplyAura, isBossDebuff, value1, value2, value3= UnitDebuff("target", i)
-		local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("target", i, "HARMFUL")
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("target", i, "HARMFUL")
 			
 		if (not spellID) then break end
 		
@@ -993,9 +991,8 @@ function EventAlert_TarBuffs_Update(...)
 		end 
 		
 		if (ifAdd_buffCur) then
-				if EA_SPELLINFO_TARGET[spellID] == nil then EA_SPELLINFO_TARGET[spellID] = {name, rank, icon, count, duration, expirationTime, unitCaster, isDebuff} end;
+				if EA_SPELLINFO_TARGET[spellID] == nil then EA_SPELLINFO_TARGET[spellID] = {name,  icon, count, duration, expirationTime, unitCaster, isDebuff} end;
 				EA_SPELLINFO_TARGET[spellID].name = name;
-				EA_SPELLINFO_TARGET[spellID].rank = rank;
 				EA_SPELLINFO_TARGET[spellID].icon = icon;
 				EA_SPELLINFO_TARGET[spellID].count = count;
 				EA_SPELLINFO_TARGET[spellID].duration = duration;
@@ -1013,7 +1010,7 @@ function EventAlert_TarBuffs_Update(...)
 
 	for i=41,80 do
 		--name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellID, canApplyAura, isBossDebuff, value1, value2, value3= UnitBuff("target", i-40)
-		name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("target", i-40, "HELPFUL")
+		name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitAura("target", i-40, "HELPFUL")
 		
 		if (not spellID) then break end
 		
@@ -1045,9 +1042,8 @@ function EventAlert_TarBuffs_Update(...)
 			
 		end 
 		if (ifAdd_buffCur) then
-				if EA_SPELLINFO_TARGET[spellID] == nil then EA_SPELLINFO_TARGET[spellID] = {name, rank, icon, count, duration, expirationTime, unitCaster, isDebuff} end;
+				if EA_SPELLINFO_TARGET[spellID] == nil then EA_SPELLINFO_TARGET[spellID] = {name,  icon, count, duration, expirationTime, unitCaster, isDebuff} end;
 				EA_SPELLINFO_TARGET[spellID].name = name;
-				EA_SPELLINFO_TARGET[spellID].rank = rank;
 				EA_SPELLINFO_TARGET[spellID].icon = icon;
 				
 				EA_SPELLINFO_TARGET[spellID].count = count;
@@ -1312,7 +1308,6 @@ function EventAlert_OnUpdate(spellID)
 	local eaf = _G["EAFrame_"..v];
 	spellID = tonumber(v);
 	local name = EA_SPELLINFO_SELF[spellID].name;
-	local rank = EA_SPELLINFO_SELF[spellID].rank;
 	
 	if (EA_Config.AllowAltAlerts == true) then
 		
@@ -1382,7 +1377,7 @@ function EventAlert_OnTarUpdate(spellID)
 
 	local v = tostring(spellID);
 	local eaf = _G["EATarFrame_"..v];
-	local name, rank = GetSpellInfo(v);
+	local name= GetSpellInfo(v);
 	spellID = tonumber(v);
 
 	if eaf ~= nil then
@@ -2849,7 +2844,7 @@ function EventAlert_UpdateLifeBloom(EA_Unit)
 				local SfontName, SfontSize = "", 0;
 
 				for i=1,40 do
-					local _, _, _, count, _, _, expirationTime, unitCaster, _, _, spellID = UnitBuff(EA_Unit, i)
+					local _, _, count, _, _, expirationTime, unitCaster, _, _, spellID = UnitBuff(EA_Unit, i)
 					if (not spellID) then
 						break;
 					end
@@ -3003,9 +2998,8 @@ function EAFun_AddSpellToScrollFrame(spellID, OtherMessage)
 	if OtherMessage == nil then OtherMessage = "" end;
 	if EA_ShowScrollSpells[spellID] == nil then
 		EA_ShowScrollSpells[spellID] = true;
-		local EA_name, EA_rank, EA_icon = GetSpellInfo(spellID);
+		local EA_name, _,EA_icon = GetSpellInfo(spellID);
 		if EA_name == nil then EA_name = "" end;
-		if EA_rank == nil then EA_rank = "" end;
 
 		local f1 = _G["EA_Version_ScrollFrame_Icon_"..spellID];
 		if f1 == nil then
@@ -3039,12 +3033,8 @@ function EAFun_AddSpellToScrollFrame(spellID, OtherMessage)
 			ShowScrollEditBox:SetHeight(25);
 			ShowScrollEditBox:SetMaxLetters(0);
 			ShowScrollEditBox:SetAutoFocus(false);
-			if (EA_rank == "") then
 				-- ShowScrollEditBox:SetText(EA_name.." ["..spellID.."]1".." ["..spellID.."]2".." ["..spellID.."]3".." ["..spellID.."]4".." ["..spellID.."]5".." ["..spellID.."]6".." ["..spellID.."]7".." ["..spellID.."]8".." ["..spellID.."]9"..OtherMessage);
-				ShowScrollEditBox:SetText(EA_name.." ["..spellID.."]"..OtherMessage);
-			else
-				ShowScrollEditBox:SetText(EA_name.."("..EA_rank..") ["..spellID.."]"..OtherMessage);
-			end
+			ShowScrollEditBox:SetText(EA_name.." ["..spellID.."]"..OtherMessage);
 			local function ShowScrollEditBoxGameToolTip()
 				ShowScrollEditBox:SetTextColor(0, 1, 1);
 				GameTooltip:SetOwner(ShowScrollEditBox, "ANCHOR_TOPLEFT");
@@ -3138,7 +3128,7 @@ end
 -----------------------------------------------------------------
 function EAFun_HookTooltips()
 	hooksecurefunc(GameTooltip, "SetUnitBuff", function(self,...)
-		local id = select(11,UnitBuff(...))
+		local id = select(10,UnitBuff(...))
 		if id then
 			self:AddDoubleLine(EX_XCLSALERT_SPELL,id)
 			self:Show()
@@ -3146,7 +3136,7 @@ function EAFun_HookTooltips()
 	end)
 
 	hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self,...)
-		local id = select(11,UnitDebuff(...))
+		local id = select(10,UnitDebuff(...))
 		if id then
 			self:AddDoubleLine(EX_XCLSALERT_SPELL,id)
 			self:Show()
@@ -3154,23 +3144,28 @@ function EAFun_HookTooltips()
 	end)
 
 	hooksecurefunc(GameTooltip, "SetUnitAura", function(self,...)
-		local id = select(11,UnitAura(...))
+		local id = select(10,UnitAura(...))
 		if id then
 			self:AddDoubleLine(EX_XCLSALERT_SPELL,id)
 			self:Show()
 		end
 	end)
-
+	local function ParseHyperLink(link)
+		local name, value = string.match(link or "", "|?H?(%a+):(%d+):")
+		if (name and value) then
+			return name:gsub("^([a-z])", strupper), value
+		end
+	end
 	hooksecurefunc("SetItemRef", function(link, text, button, chatFrame)
 		if string.find(link,"^spell:") then
-			local id = string.sub(link,7)
+			local id = select(2,ParseHyperLink(link))
 			ItemRefTooltip:AddDoubleLine(EX_XCLSALERT_SPELL,id)
 			ItemRefTooltip:Show()
 		end
 	end)
 
 	GameTooltip:HookScript("OnTooltipSetSpell", function(self)
-		local id = select(3,self:GetSpell())
+		local id = select(2,self:GetSpell())
 		if id then
 			self:AddDoubleLine(EX_XCLSALERT_SPELL,id)
 			self:Show()
@@ -3434,7 +3429,7 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 					end
 				end
 			end
-		elseif (event == "UNIT_POWER") then
+		elseif (event == "UNIT_POWER_UPDATE") then
 			local sUnitType, sPowerType = ...;
 			
 			-- SPEC EVENT FIRED, To check all INDEXD-EVENTCFG about this frame(by GroupIndex).
@@ -3549,12 +3544,12 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 						end
 						if (SubCheck.CheckAuraExist ~= nil) then
 							fShowResult = false;
-							local sSpellName, sSpellRank = GetSpellInfo(SubCheck.CheckAuraExist);
-							local sCurrSpellName, _, _, iStack, _, _, iExpireTime = UnitBuff(sUnitType, sSpellName, sSpellRank, sAuraFilter);
+							local sSpellName = GetSpellInfo(SubCheck.CheckAuraExist);
+							local sCurrSpellName, _, iStack, _, _, iExpireTime = AuraUtil.FindAuraByName(sSpellName,sUnitType, sAuraFilter);
 							if sCurrSpellName ~= nil then
 								fShowResult = true;
 							else
-								sCurrSpellName, _, _, iStack, _, _, iExpireTime = UnitDebuff(sUnitType, sSpellName, sSpellRank, sAuraFilter);
+								sCurrSpellName, _, iStack, _, _, iExpireTime = AuraUtil.FindAuraByName(sSpellName,sUnitType, sAuraFilter);
 								if sCurrSpellName ~= nil then
 									fShowResult = true;
 								end
@@ -3574,10 +3569,10 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 						end
 						if (SubCheck.CheckAuraNotExist ~= nil) then
 							fShowResult = false;
-							local sSpellName, sSpellRank = GetSpellInfo(SubCheck.CheckAuraNotExist);
-							local sCurrSpellName = UnitBuff(sUnitType, sSpellName, sSpellRank, sAuraFilter);
+							local sSpellName = GetSpellInfo(SubCheck.CheckAuraNotExist);
+							local sCurrSpellName = AuraUtil.FindAuraByName(sSpellName, sUnitType, sAuraFilter);
 							if sCurrSpellName == nil then
-								sCurrSpellName = UnitDebuff(sUnitType, sSpellName, sSpellRank, sAuraFilter);
+								sCurrSpellName = AuraUtil.FindAuraByName(sSpellName, sUnitType, sAuraFilter);
 								if sCurrSpellName == nil then
 									fShowResult = true;
 								end
@@ -3772,7 +3767,7 @@ end
 function GetBuffIndexOfSpellID(unit,SID)
 
 	for i=1,40 do
-			local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
+			local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
 			
 			if (SID == spellID)	then 
 				return(i)
@@ -3783,7 +3778,7 @@ end
 --取得法術ID在指定單位身上的DEBUFF索引
 function GetDebuffIndexOfSpellID(unit,SID)
 	for i=1,40 do
-		local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3  = UnitDebuff(unit,i)
+		local name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellID, canApplyAura, isBossDebuff, _, nameplateShowAll, timeMod, value1, value2, value3  = UnitDebuff(unit,i)
 		if (SID == spellID)	then 
 			return(i)
 		end
@@ -3836,7 +3831,7 @@ end
 function RemoveAllScdCurrentBuff()
 
 	for k,v in ipairs(EA_ScdCurrentBuffs) do
-		local SpellName,SpellIcon=GetSpellInfo(v)
+		local SpellName,_,SpellIcon=GetSpellInfo(v)
 		local HasSpell=GetSpellInfo(SpellName)
 		if HasSpell==nil then
 
@@ -3852,7 +3847,7 @@ function RemoveAllScdCurrentBuff()
 end
 function RemoveSingleSCDCurrentBuff(spellID)
 
-		local SpellName,SpellIcon=GetSpellInfo(spellID)
+		local SpellName,_,SpellIcon=GetSpellInfo(spellID)
 		local HasSpell=GetSpellInfo(SpellName)
 		--if HasSpell==nil then
 			
@@ -3884,7 +3879,7 @@ end
 function HideAllScdCurrentBuff()
 
 	for k,v in ipairs(EA_ScdCurrentBuffs) do
-		local SpellName,SpellIcon=GetSpellInfo(v)
+		local SpellName,_,SpellIcon=GetSpellInfo(v)
 		local HasSpell=GetSpellInfo(SpellName)
 		local eaf = _G["EAScdFrame_"..v];
 		local spellID = tonumber(v);
@@ -4022,7 +4017,7 @@ EA_EventList={
 		--["UNIT_COMBO_POINTS"]			= EventAlert_COMBO_POINTS,
 		["UNIT_DISPLAYPOWER"]			= EventAlert_DISPLAYPOWER,
 		["UNIT_HEALTH"]					= EventAlert_UNIT_HEALTH	,
-		["UNIT_POWER"]					= EventAlert_UNIT_POWER,
+		["UNIT_POWER_UPDATE"]					= EventAlert_UNIT_POWER_UPDATE,
 		["UNIT_POWER_FREQUENT"]			= EventAlert_UNIT_POWER,
 		["RUNE_TYPE_UPDATE"]			= EventAlert_UpdateRunes,
 		["RUNE_POWER_UPDATE"]			= EventAlert_UpdateRunes,
