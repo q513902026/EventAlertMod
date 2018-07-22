@@ -199,17 +199,21 @@ function EventAlert_InitArrayConfig()
 	
 	init1_2()
 	
-	--[[
+	
 	if EA_Config.EA_SPELL_ITEM == nil then
 		EA_Config.EA_SPELL_ITEM = {}
+		--[[ 使用本地缓存来替代查询 注意每次版本更新后记到更新
+		local s
 		for i = 1,999999 do
 			s = select(2,GetItemSpell(i))
 			if s then
 				EA_Config.EA_SPELL_ITEM[s] = i
 			end
 		end
+		--]]
 	end
-	]]--
+	
+	
 	
 	if (EA_Config.ChangeTimer == true) then								--若計時顯示在框架內
 		-- 若使用了小數點倒數
@@ -1420,7 +1424,7 @@ function EventAlert_OnSCDUpdate(spellID)
 	local EA_ChargeCurrent, EA_ChargeMax, EA_ChargeStart,EA_ChargeDuration = GetSpellCharges(spellID);
 	local EA_start, EA_duration, EA_Enable = GetSpellCooldown(spellID);	
 	
-	local itemID = EA_Config.EA_SPELL_ITEM[spellID]
+	local itemID = EA_Config.EA_SPELL_ITEM[spellID] or GetItemSpell()
 	if itemID then		
 		EA_start, EA_duration, EA_Enable = GetItemCooldown(itemID);	
 	end
