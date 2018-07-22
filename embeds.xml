@@ -6,4 +6,6 @@
   <Script file="libs\LibButtonGlow-1.0\LibButtonGlow-1.0.lua"/> 
   <Script file="libs\!NoTaint_UIDropDownMenu\LibStub\LibStub.lua"/> 
   <Include file="libs\!NoTaint_UIDropDownMenu\UIDropDownMenu.xml"/> 
+  <Include file="libs\LibStub\LibStub.lua">
+  <Include file="libs\LibAuraUtil-1.0\LibAuraUtil-1.0.xml"/> 
 </Ui>

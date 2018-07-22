@@ -56,7 +56,7 @@ local EA_SPEC_expirationTime2 = 0;
 local EA_FormType_FirstTimeCheck = true;
 local EA_ADDONS_NAME = "EventAlertMod";
 -----------------------------------------------------------------
-		
+local LibAura = LibStub:GetLibrary("LibAuraUtil-1.0")
 local function EAFun_GetSpellItemEnable(EAItems)
 	local SpellEnable = false;
 	if (EAItems ~= nil) then
@@ -3549,11 +3549,11 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 						if (SubCheck.CheckAuraExist ~= nil) then
 							fShowResult = false;
 							local sSpellName = GetSpellInfo(SubCheck.CheckAuraExist);
-							local sCurrSpellName, _, iStack, _, _, iExpireTime = AuraUtil.FindAuraByName(sSpellName,sUnitType, sAuraFilter);
+							local sCurrSpellName, _, iStack, _, _, iExpireTime = LibAura.UnitBuff(sSpellName,sUnitType, sAuraFilter);
 							if sCurrSpellName ~= nil then
 								fShowResult = true;
 							else
-								sCurrSpellName, _, iStack, _, _, iExpireTime = AuraUtil.FindAuraByName(sSpellName,sUnitType, sAuraFilter);
+								sCurrSpellName, _, iStack, _, _, iExpireTime = LibAura.UnitDebuff(sSpellName,sUnitType, sAuraFilter);
 								if sCurrSpellName ~= nil then
 									fShowResult = true;
 								end
@@ -3574,9 +3574,9 @@ function EventAlert_GroupFrameCheck_OnEvent(self, event, ...)
 						if (SubCheck.CheckAuraNotExist ~= nil) then
 							fShowResult = false;
 							local sSpellName = GetSpellInfo(SubCheck.CheckAuraNotExist);
-							local sCurrSpellName = AuraUtil.FindAuraByName(sSpellName, sUnitType, sAuraFilter);
+							local sCurrSpellName = LibAura.UnitBuff(sSpellName, sUnitType, sAuraFilter);
 							if sCurrSpellName == nil then
-								sCurrSpellName = AuraUtil.FindAuraByName(sSpellName, sUnitType, sAuraFilter);
+								sCurrSpellName = LibAura.UnitDebuff(sSpellName, sUnitType, sAuraFilter);
 								if sCurrSpellName == nil then
 									fShowResult = true;
 								end
